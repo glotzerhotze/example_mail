@@ -1,0 +1,14 @@
+# Django : 2014-06-11
+# Kapitel 5.2.3 bcc-Tabelle: Blindcopy einer oder mehrerer Sendeadressen.
+#
+# Nach dem Ändern und/oder Erweitern der Tabelle, muß noch mittels
+# $ postmap /etc/postfix/sender_bcc_maps
+# die zugehörige Datenbank erzeugt werden.
+#
+# catch all, alle Nachrichten einer bestimmten Domäne kopieren
+#@pml010080.intra.nausch.org            mailsave@nausch.org
+#
+# alle Nachrichten eines einzelnen Absenders kopieren
+#weather@nausch.org                     mailsave@nausch.org
+#
+#fail2ban@vml000080.dmz.nausch.org      michi@mail.sskm.de

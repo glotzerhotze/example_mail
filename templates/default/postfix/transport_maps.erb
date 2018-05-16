@@ -1,0 +1,33 @@
+# Kapitel 5.2.5 transport-Tabelle: Abweichende Zustellung
+# Lookup-Tabelle zum Aktivieren einer alternativen Mailrouting bei der
+# Zustellung an einen weiteren Mailserver. Nach dem Ändern und/oder
+# Erweitern der Tabelle, muß noch mittels:
+#               $ postmap /etc/postfix/transport_map
+#
+# die zugehörige Datenbank erzeugt werden.
+#
+# Alle eMails, die an Subdomains von nausch.org gerichtet sind
+# ("." am Anfang der Zeile!) werden an den/die Mailserver von
+# intra.nausch.org (MX-Records) weitergeleitet. (keine "["-Klammern!)
+#.nausch.org                            smtp:intra.nausch.org
+
+# Alle eMails, die an die Domain tachtler.net gerichtet sind, werden an
+# den bzw. die Mailserver der Mail-Domäne t-offline.de (MX-Records)
+# weitergeleitet. (keine "["-Klammern!)
+# tachtler.net                          smtp:t-offline.de
+example_2.com                           smtp:example.com
+
+# Mails an backup.nausch.org werden an den Mailserver (A-Record) auf Port 25
+# mit Namen mail.intra.nausch.org geschickt.
+#backup.nausch.org                      smtp:[mail.intra.nausch.org]:25
+
+# Django : 2013-02-21
+# eMails an den Fax-Server an den Host vml000020 weiterleiten
+#fax.nausch.org                          smtp:[10.0.0.20]:25
+# eMails an den Key-Server sollen an den Host vml000030 weitergeleitet
+# werden.
+#keyserver.nausch.org                    smtp:[10.0.0.30]:25
+
+# Django : 2013-02-22
+# eMails an den Mailinglisten-Server an das Programm mailman weiterreichen
+#lists.nausch.org                       mailman:

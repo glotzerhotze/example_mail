@@ -1,0 +1,13 @@
+# Django : 2012-02-06
+# Kapitel 5.2.7 access-Tabelle: Wer darf, wer darf nicht?
+# Tabelle zum black- und whitelisten einzelner Hosts auf Basis ihrer
+# IP-Adressen nach dem Ändern und/oder Erweitern der Tabelle, muß ein
+# laufender Postfix über die Änderungen mit einem reload informiert
+# werden:
+#             $ systemctl reload postfix.service
+#
+# Es muss hier keine Datenbank mit postmap erzeugt werden, da
+# Postfix die ASCII-Konfigurationsdatei direkt auswertet!
+#
+#
+#10.20.30.40/26        REJECT

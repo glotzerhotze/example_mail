@@ -1,0 +1,13 @@
+# Django : 2015-10-07 - Empfängerbasierte verpflichtende TLS-Verschlüsselung
+#          Tabelle für die zielwegorientierte individuelle Vorgabe einer
+#          verpflichtenden TLS-Transportverschlüsselung einzelner Zieldomains.
+#          http://www.postfix.org/postconf.5.html#smtp_tls_policy_maps
+#
+#          Nach dem Ändern und/oder Erweitern der Tabelle, muß noch mittels:
+#
+#                    $ postmap /etc/postfix/smtp_tls_policy_maps
+#
+#          die zugehörige Datenbank erzeugt werden.
+#
+# Zieldomain    smtp_tls_security_level    optionale Parameter
+example.com     fingerprint                match=19:29:31:0A:67:32:85:C8:E0:74:46:8E:3C:64:13:84:DB:04:EA:5C

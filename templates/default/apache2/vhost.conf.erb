@@ -1,0 +1,8 @@
+<VirtualHost *:80>
+
+  ServerName <%= @vhost %>.example.com
+  ServerAlias <%= @vhost %>.example.com
+  DocumentRoot /var/www/<%= @vhost %>/htdocs
+  ErrorLog /var/www/<%= @vhost %>/logs/error.log
+  CustomLog /var/www/<%= @vhost %>/logs/requests.log combined
+</VirtualHost>

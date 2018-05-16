@@ -1,0 +1,7 @@
+# virtual_mailbox_maps.cf
+user            = <%= @username %>
+password        = <%= @password %>
+dbname          = <%= @database %>
+hosts           = <%= @host %>
+# query           = SELECT maildir FROM mailbox WHERE local_part='%u' AND domain='%d' AND active='1';
+query           = SELECT maildir FROM mailbox WHERE username='%s' AND active='1';

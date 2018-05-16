@@ -1,0 +1,13 @@
+AllCops:
+  Include:
+    - Berksfile
+    - Rakefile
+    - Guardfile
+  Exclude:
+    - .kitchen/**
+LineLength:
+  Enabled: false
+Naming/HeredocDelimiterNaming:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false

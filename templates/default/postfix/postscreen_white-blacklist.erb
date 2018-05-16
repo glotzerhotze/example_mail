@@ -1,0 +1,23 @@
+# Django : 2014-10-29
+# access-Tabelle: Wer wird von postscreen ausgenommen und wer nicht?
+# Tabelle zum black- und whitelisten einzelner Hosts auf Basis ihrer
+# IP-Adressen. In der rechten Tabellenspalte können die AKtionen
+# "permit", "reject" und "dunno" gesetzt werden.
+# Nach dem Ändern und/oder Erweitern der Tabelle, muß ein
+# laufender Postfix über die Änderungen mit einem reload informiert
+# werden:
+#             $ systemctl reload postfix.service
+#
+# Es muss hier keine Datenbank mit postmap erzeugt werden, da
+# Postfix die ASCII-Konfigurationsdatei direkt auswertet!
+#
+#88.217.171.167/32               permit
+
+#192.168.2.0/24                  dunno
+10.1.2.0/16                 permit
+
+## T-Offline Mail-Server
+#194.25.134.0/24                 permit
+
+#213.183.2.247/32                reject
+#213.183.9.35/32                 reject

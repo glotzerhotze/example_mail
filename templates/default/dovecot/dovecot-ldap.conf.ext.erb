@@ -1,0 +1,15 @@
+uris = ldap://ipa-01.example.com
+#tls = yes
+#tls_ca_cert_file = /etc/ipa/ca.crt
+#tls_require_cert = demand
+auth_bind = yes
+base = cn=users,cn=accounts,dc=example,dc=com
+dn = uid=<%= @user %>,cn=users,cn=accounts,dc=example,dc=com
+dnpass = <%= @password %>
+scope = subtree
+user_attrs = uid=user, userPassword=password
+user_filter = (&(objectClass=posixAccount)(mail=%u))
+pass_attrs = %u=user
+pass_filter = (&(objectClass=posixAccount)(mail=%u))
+iterate_attrs = uid=user
+iterate_filter = (objectClass=posixAccount)

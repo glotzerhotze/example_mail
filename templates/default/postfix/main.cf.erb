@@ -1,0 +1,878 @@
+################################################################################
+## INSTALLATIONS-KONFIGURATIONS INFORMATIONEN
+#
+# Folgende Default-Parameter werden benutzt, sobald eine neue Postfix-Version
+# installiert wird.
+#
+# Django : 2014-10-31 - Vollständiger Pfad zum Postfix sendmail Programm, dem
+#          zu senmail kompatiblen sendmail Befehl.
+# default: sendmail_path = /usr/sbin/sendmail
+sendmail_path = /usr/sbin/sendmail.postfix
+
+# Django : 2014-10-31 - Vollständiger Pfad zum Postfix newaliases Programm, dem
+#          zu sendmail kompatiblen Programm zum Anlegen der Alias Datenbanken.
+# default: newaliases_path = /usr/bin/newaliases
+newaliases_path = /usr/bin/newaliases.postfix
+
+# Django : 2014-10-31 - Vollständiger Pfad zum Postfix qmail-Programm, dem zu
+#          sendmail kompatiblen Programm zum Anzeigen der Maile-Queues
+# default: mailq_path = /usr/bin/mailq
+mailq_path = /usr/bin/mailq.postfix
+
+# Django : 2014-10-31 - Gruppe für die Befehle mail submission und queue
+#          management. Die Gruppe muss eine numerische eigene ID haben
+#          und darf nicht mit anderen Benutzeraccounts geteilt werden,
+#          auch nicht mit dem Postfix User!
+# default: setgid_group = postdrop
+setgid_group = postdrop
+
+# Django : 2014-10-31 - Pfad für die Postfix Postfix HTML Dokumentation.
+# default: html_directory
+html_directory = no
+
+# Django : 2014-10-31 - Pfad für die Postfix online man-pages.
+# default: manpage_directory = /usr/local/man
+manpage_directory = /usr/share/man
+
+# Django : 2014-10-31 - Pfadangabe für die Postfix Beispielkonfigurationsdateien.
+#          Dieser Parameter ist obsolete seit Postfix 2.1.
+# default: sample_directory = /etc/postfix
+sample_directory = /usr/share/doc/postfix-2.11.3/samples
+
+# Django : 2014-10-31 - Pfadangabe für die Postfix README Dateien.
+# default: readme_directory = no
+readme_directory = /usr/share/doc/postfix-2.11.3/README_FILES
+
+################################################################################
+## PFADANGABEN DER LOKALEN INSTALLATION
+#
+# Django : 2014-10-31 - Definition des Speicherortes für die Queue-Dateien von
+#          Postfix. Dies ist auch der root-Pfad, falls Postfix in einer
+#          chroot-Umgebung laufen sollte. In der Datei examples/chroot-setup
+#          findet man bei Bedarf nützliche Hinweise und Beispiele, die
+#          beschreiben, wie man Postfix in einer chroot-Umgebung aufsetzen und
+#          betreiben kann.
+# default: queue_directory = /var/spool/postfix
+queue_directory = /var/spool/postfix
+
+# Django : 2014-10-31 - Vollständiger Pfad zu allen postXXX-Programmen.
+# default: command_directory = /usr/sbin
+command_directory = /usr/sbin
+
+# Django : 2014-10-31 Vollständiger Pfad zum Verzeichnis, in dem sich alle
+#          postfix Daemon Programme (die z.B. auch in der master.cf
+#          aufgeführt sind) befinden. Das Verzeichnis muss root gehören!
+# default: daemon_directory = /usr/libexec/postfix
+daemon_directory = /usr/libexec/postfix
+
+# Django : 2014-10-31 - Datenverzeichnis, in dem Postfix alle variablen Daten
+#          ablegt, wie z.B. Caches, Zufallszahlen ect. pp. Das Verzeichnis
+#          muss dem nachfolgendem "mail_owner" gehören!
+# default: data_directory = /var/lib/postfix
+data_directory = /var/lib/postfix
+
+################################################################################
+## RECHTE BEI QUEUES UND PROZESSEN
+#
+# Django : 2014-10-31 - Definition des Nutzers, unter dem die meisten Postfix
+#          Daemons laufen und mit dem die Queue-Dateien geschrieben werden.
+#          Die User muss unique sein, d.h. er darf weder einer anderen Gruppe
+#          noch einem Anderen User angehören, sowie fremde Dateirechte und
+#          Prozesse auf dem System besitzen! Also unbedingt einen separaten
+#          Nutzer verwenden!
+# default: mail_owner = postfix
+mail_owner = postfix
+
+# Django : 2014-10-31 - Festlegung der Defaultrechte, die vom LDA (Local
+#          Delivery Agent) verwendet werden, wenn dieser Nachrichten in eine
+#          externe Datei schreibt, oder einem anderen Befehl übergibt.
+#          Der Parameter wird auch verwendet, sollten keine userbezogenen
+#          Vorgaben vorhanden sein.
+#          Auf keinen Fall einen privilegierten Nutzer oder gar den Benutzer
+#          postfix verwenden!
+# default: default_privs = nobody
+default_privs = nobody
+
+################################################################################
+## DEBUGGING
+#
+# Django : 2014-10-31 - Mit dem Parameter "debug_peer_level" wird festgelegt
+#          um welchen Faktor der Logging-Level erhöht wird, wenn ein SMTP
+#          Client, ein Hostname oder eine IP-Adresse zu den Definitionen des
+#          nachfolgenden "debug_peer_list"-Parameters passt.
+# default: debug_peer_level = 2
+debug_peer_level = 2
+
+# Django : 2014-10-31 : Definition einer Liste aus Netzwerk-Adressen,
+#          Namen, IP-Adressen oder entsprechender Postfix-Listen
+#          "type:name", für die der Loglevel gemäß dem obigen Loglevelwert
+#          erhöht werden soll.
+#          Bsp: debug_peer_list = 127.0.0.1
+#               debug_peer_list = some.domain
+#               cidr:/etc/postfix/debug_peer_list
+# default: debug_peer_list =
+
+# Django : 2014-10-13 - Debugger-Befehlszeile
+#          Die Option "debugger_command" definiert den kompletten Debug-Aufruf,
+#          das ausgeführt werden soll, sofern der Postfix Daemon mit der
+#          Option -D gestartet wurde.
+#          Am Ende der Befehlskette sollte man ein "... & sleep 5" anfügen,
+#          damit damit der Debugger genügend Zeit hat loszulegen, bevor das
+#          Programm aufgerufen wird.
+#
+#          Da wir kein X-System auf unserem Mailserver installiert haben (wozu
+#          auch?), verwenden wir nachfolgendes Beispiel. Als Ergebnis erhalten
+#          wir damit eine Datei mit dem Namen des Prozesses und der zugehörigen
+#          ID, die im Konfigurationsverzeichnis abgespeichert wird.
+#
+debugger_command =
+                   PATH=/bin:/usr/bin:/usr/local/bin; export PATH; (echo cont;
+                   echo where) | gdb $daemon_directory/$process_name $process_id 2>&1
+                   >$config_directory/$process_name.$process_id.log & sleep 5
+
+################################################################################
+## ZUSTÄNDIGKEITEN, VERTRAUENSWÜRDIGE NETZE UND NETZWERKK-DEFINITIONEN
+#
+# Django : 2014-10-15 - Hostname auf "offiziellen" DNS-MX-Record Namen gesetzt
+# default: myhostname = FQDN
+myhostname = mail.example.com
+
+# Django : 2014-10-15 - Domainpart der lokal generierten Nachrichten gesetzt
+# default: myorigin = $myhostname
+myorigin = $mydomain
+
+# Django : 2014-10-15 - Für welche Domains ist unser Mailserver zuständig,
+#          also final destination? Zusätzlich zu den Defaultwerten soll der MTA
+#          auch noch Nachrichten für die beiden Sub-Domains lists.nausch.org
+#          (Mailman) und dmarc.nausch.org (DMARC-Reportmails) annehmen.
+# default: mydestination = $myhostname, localhost.$mydomain, localhost
+mydestination =
+                $myhostname
+                localhost.$mydomain
+                localhost
+#                lists.nausch.org
+#                dmarc.nausch.org
+
+# default: unbekannte Empfänger sollen abgewiesen und nicht mit einem
+#          temporären Fehler 450 abgewiesen werden.
+# default: unknown_local_recipient_reject_code = 550
+#          unverified_recipient_reject_code = 450
+unverified_recipient_reject_code = 577
+
+# Django : 2014-10-15 - Soll bei einem unbekanntem Ziel der genaue Tabellenname
+#          bei der Ablehnung genannt werden?
+# default: show_user_unknown_table_name = yes
+show_user_unknown_table_name = no
+
+# Django : 2014-10-15 - auf allen Interfaces und Protokollen (IPv4 und IPv6)
+#          soll gelauscht werden
+# default: inet_interfaces = all
+inet_protocols = ipv4
+
+# Django : 2014-10-15 - Grundsätzlich soll erst einmal unser Mailserver nur dem
+#          eigenen Host trauen, sonst niemanden!
+# default: mynetworks_style = subnet
+mynetworks_style = host
+
+mynetworks =
+             127.0.0.0/8
+             10.255.250.0/23
+
+# Django : 2015-10-15 - Backup-Mailserver explizit erlauben
+# default: permit_mx_backup_networks =
+# permit_mx_backup_networks = 88.217.171.167/32
+
+################################################################################
+## ROUTING - WEITERLEITEN VON NACHRICHTEN AN DAS EIGENTLICHE ZIEL
+#
+# Django : 2014-10-15 - Relayhost: Alle Nachrichten werden an den Relayhost
+#          smtp-out.dmz.nausch.org gesendet.
+# default: relayhost =
+# relayhost = [smtp-out.dmz.nausch.org]
+
+# Django : 2014-10-15 - Backup-Relayhost: Sollte der $relayhost nicht erreichbar
+#          sein, soll sich unser MTA an den backup-relayhost
+#          smtp-backup.dmz.nausch.org senden
+# default: smtp_fallback_relay = $fallback_relay
+# smtp_fallback_relay = [smtp-backup.dmz.nausch.org]
+
+# Django : 2014-10-15 - Relay Domains: Postfix als eingehendes Mailrelay vor
+#          einem anderen Server
+# default: relay_domains = $mydestination
+# relay_domains = btree:/etc/postfix/relay_domains
+
+# Django : 2014-10-15 - Nachrichten für eine bestimmte Richtung sollen
+#          abweichend von den MX-Definitionen im DNS an dedizierte Ziele
+#          geroutet/weitergeleitet werden.
+# default: transport_maps =
+transport_maps = btree:/etc/postfix/transport_maps
+
+# Django : 2014-10-15 - Definition zur Erreichbarkeit unseres MDA-Servers
+#          Dovecot-IMAP
+# default: virtual_transport = virtual
+virtual_transport = lmtp:[mail.example.com]:24
+
+################################################################################
+## QUEUEING-VERHALTEN
+#
+# Django : 2014-10-18 - Queue-Lifetime auf 3 Tage heruntersetzen, defininiert
+#          die maximale Zeit, die der MX versuchen darf, eine Nachricht zuzu-
+#          stellen
+# default: maximal_queue_lifetime = 5d
+maximal_queue_lifetime = 3d
+
+# Django : 2014-03-17- Bounce-Queue-Lifetime auf 3 Tage heruntersetzen, die
+#          der MTA versuchen soll eine Bouncenachricht zuzustellen.
+# default: bounce_queue_lifetime = 5d
+bounce_queue_lifetime = 3d
+
+################################################################################
+## NACHRICHTENGROESSE UND ZUSTELLVERSUCHE/-MENGEN
+#
+# Django : 2014-10-18 Maximale Nachrichtengröße festlegen. Maximale Nachrichten-
+#          größe einer Nachricht incl. der Headerinformationen darf maximal
+#          50 MB ( 52428800 = 50*1024*1024 ) betragen, darüber verweigert
+#          Postfix die Annahme.
+# default: message_size_limit = 10240000
+message_size_limit = 52428800
+
+# Django : 2014-10-18 Maximale Mailboxgröße einer einzelnen Mailbox bzw.
+#          Maildir-Fiels. Der Wert darf nicht kleiner als die maximale
+#          Nachrichtengröße (message_size_limit) sein.
+# default: mailbox_size_limit = 10240000
+mailbox_size_limit = 52428800
+
+# Django : 2010-10-28 - Rate Limiting (DOS-Attacken verhindern) maximale
+#          Zustellung limitieren (Kapitel 24 des Buches Postfix)
+#          (Kapitel 13.14 Rate-Limiting gegenüber Clients durchsetzen)
+#          Basiszeiteinheit für die Kalkulation der rate-limits
+# default: anvil_rate_time_unit = 60s
+#
+#          Maximale Anzahl gleichzeitiger Verbindungen pro einliefernenden Host
+# default : smtpd_client_connection_count_limit = 50
+smtpd_client_connection_count_limit = 20
+#
+#          Maximale Anzahl von Verbindungsversuchen je definierter Zeiteinheit
+#          (anvil_rate_time_unit) pro einliefernden Host
+# default: smtpd_client_connection_rate_limit = 0
+smtpd_client_connection_rate_limit = 20
+#
+#          Maximale Anzahl von erlaubten Empfänger Adressen je definierter
+#          Zeiteinheit (anvil_rate_time_unit) pro einliefernden Host
+# default: smtpd_client_recipient_rate_limit = 0
+smtpd_client_recipient_rate_limit = 50
+#
+#          Maximale Anzahl von erlaubten Anzahl von eMails je definierter Zeit-
+#          einheit (anvil_rate_time_unit) pro einliefernden Host
+# deafault: smtpd_client_message_rate_limit = 0
+smtpd_client_message_rate_limit = 50
+#
+#          Welche Cleints sollen vom Rate-Limeting ausgenommen werden? Per
+#          Default sind dies alle Clients aus dem eigenen Netzwerk $mynetworks
+# default: smtpd_client_event_limit_exceptions =
+#          ${smtpd_client_connection_limit_exceptions:$mynetworks}
+#
+#          Wie oft soll der anvil-Daemon Statistikdaten ins Maillog schreiben?
+# default: anvil_status_update_time = 600s
+#
+#          Ausgehende Verbindungen der Delivery-Clients limitieren. Für jeden
+#          einzelnen Transport kann bei Bedarf eine eigene Rate definiert
+#          werden.
+# default: default_destination_rate_delay = 0s
+#          error_destination_rate_delay = $default_destination_rate_delay
+#          lmtp_destination_rate_delay = $default_destination_rate_delay
+#          local_destination_rate_delay = $default_destination_rate_delay
+#          relay_destination_rate_delay = $default_destination_rate_delay
+#          retry_destination_rate_delay = $default_destination_rate_delay
+#          smtp_destination_rate_delay = $default_destination_rate_delay
+#          virtual_destination_rate_delay = $default_destination_rate_delay
+#          Ausgehende Nachrichten des Mailinglistenservers auf 2,5 Minuten
+#          setzen
+smtp_destination_rate_delay = 150s
+
+################################################################################
+## RÜCKMELDUNGEN BEEINFLUSSEN UND INDIVIDUALISIEREN
+#
+# Django : 2014-10-18 - Greeting Banner bei der 220er Begrüßung des MTA
+smtpd_banner = $myhostname ESMTP $mail_name
+
+# Django : 2014-10-16 - Extra-Footer bls zweite Zeiler jeder Fehlermeldungen
+#          anfügen
+smtpd_reject_footer = \c. Contact your postmaster/admin for technical assistance. He can achieve our postmaster via email: postmaster@example.com - In any case, please provide the following information in your problem report: This error message, time ($localtime), client ($client_address) and server ($server_name).
+
+# Django : 2014-10-16 - Anzeige des Tabellen-Namens, in der der Empfänger
+#          nicht gefunden wurde. Das unterdrücken macht unter Umständen die
+#          Fehlersuche etwas aufwändiger, aber Externen geht diese Detailinfo
+#          im Grunde nichts an.
+# default: show_user_unknown_table_name = yes
+show_user_unknown_table_name = no
+
+# Django : 2014-10-24 - Adressverifikationsdetails unterdrücken
+#          Weder den numerischen SMTP-reply-Code, noch den enhanced status code
+#          zurückgeben. Lediglich "Recipient address lookup failed" zurückmelden.
+# default: unverified_recipient_reject_reason =
+unverified_recipient_reject_reason = Recipient address lookup failed
+
+# Django : 2014-10-24 - Adressverifikationsdetails unterdrücken
+#          Weder den numerischen SMTP-reply-Code, noch den enhanced status code
+#          zurückgeben. Lediglich "Recipient address lookup failed" zurückmelden.
+# default: unverified_sender_reject_reason =
+unverified_sender_reject_reason = Sender address lookup failed
+
+# Django : 2014-10-18 Definition der benutzerspezifischen und individualisierten
+#          Bounce-Nachrichten mit deutsch- und englischsprachigen Texten aktiviert
+# default: bounce_template_file =
+# bounce_template_file = /etc/postfix/bounce.de-DE.cf
+
+# Django : 2014-10-18 - Delivery Status Notification (DSN) selectiv sperren
+#          oder freigeben
+# default: smtpd_discard_ehlo_keyword_address_maps =
+smtpd_discard_ehlo_keyword_address_maps = cidr:/etc/postfix/esmtp_access
+
+# Django : 2014-10-18 - SMTP-Kommando VRFY sperren, mit dem eine einfache und
+#          schnelle Addressverifizierung möglich ist.
+# default: disable_vrfy_command = no
+disable_vrfy_command = yes
+
+# Django : 2015-10-08 - Fehlercode bei Verwendung der Option
+#          reject_plaintext_session beim Einsatz von verpflichtender
+#          TLS-Transportverschlüsselung.
+#          https://tools.ietf.org/html/rfc3463#section-3.8
+# default: plaintext_reject_code = 450
+plaintext_reject_code = 571
+
+################################################################################
+## LOOKUP-TABELLEN
+#
+# Django : 2014-10-15 - default Datenbank Typ für die Befehle newaliases,
+#          postalias und postmap auf das performantere btree umgestellt.
+# default default_database_type = hash
+default_database_type = btree
+
+# Django : 2014-10-15 - Trennzeichen zwischen Usernamen und Adresserweiterung
+# default: recipient_delimiter =
+recipient_delimiter = +
+
+# Django : 2014-10-15 - Alias-Tabelle für die Zustellung von lokalen Nachrichten
+#          durch den MDA (Mail Delivery Agent) "local". Nach Änderungen an der
+#          Tabelle /etc/aliases ist "newaliases" zum Neubau des Datenbankfiles
+#          notwendig!
+# default: alias_maps = hash:/etc/aliases, nis:mail.aliase
+alias_maps = hash:/etc/aliases
+#            btree:/etc/mailman/aliases
+alias_database = hash:/etc/aliases
+
+# Django : 2014-10-15 - Optionale Lookup Tabelle mit allen gültigen Empfängern
+#          der in $relay_domains aufgeführten Domains
+# default: relay_recipient_maps =
+relay_recipient_maps =
+#                         btree:/etc/mailman/virtual-mailman
+#                         btree:/etc/mailman/roleaccounts
+
+################################################################################
+# Django : 2014-10-15 - virtuelle Mail-Domains und Mailboxen mit Anbindung an
+#          das pgSQL-Datenbankbackend (Verwaltung mit Hilfe von postfixadmin)
+# default: virtual_mailbox_domains = $virtual_mailbox_maps
+#          virtual_alias_maps = $virtual_maps
+#          virtual_mailbox_maps =
+virtual_mailbox_domains = proxy:pgsql:/etc/postfix/pgsql/virtual_domains_maps.cf
+
+virtual_alias_maps =      proxy:pgsql:/etc/postfix/pgsql/virtual_alias_maps.cf
+                          proxy:pgsql:/etc/postfix/pgsql/virtual_alias_domain_maps.cf
+                          proxy:pgsql:/etc/postfix/pgsql/virtual_alias_domain_catchall_maps.cf
+
+virtual_mailbox_maps =    proxy:pgsql:/etc/postfix/pgsql/virtual_mailbox_maps.cf
+                          proxy:pgsql:/etc/postfix/pgsql/virtual_alias_domain_mailbox_maps.cf
+
+# Django : 2014-10-15 - BCC-Adress Lookup Tabelle mit deren Hilfe Nachrichten
+#          einzelner oder mehrerer Empfänger automatisch an einen weiteren
+#          Empfänger geschickt werden.
+# default: recipient_bcc_maps =
+recipient_bcc_maps = btree:/etc/postfix/recipient_bcc_maps
+
+# Django : 2014-10-15 - BCC-Adress Lookup Tabelle mit deren Hilfe Nachrichten
+#          einzelner oder mehrerer Absender automatisch an einen weiteren
+#          Empfänger geschickt werden.
+sender_bcc_maps = btree:/etc/postfix/sender_bcc_maps
+
+# Django : 2014-10-16 - SMTP Lookup Tabelle mit deren Hilfe eMail-Adressen der
+#          Empfänger im SMTP-Envelope und im Header der eMail beim Verlassen
+#          des MTA via SMTP umgeschrieben werden können.
+# default: smtp_generic_maps =
+smtp_generic_maps = btree:/etc/postfix/smtp_generic_maps
+
+# Django : 2014-10-16 - LMTP Lookup Tabelle mit deren Hilfe eMail-Adressen der
+#          Empfänger im SMTP-Envelope und im Header der eMail beim Verlassen
+#          des MTA zum MDA via LMTP umgeschrieben werden können.
+# default: smtp_generic_maps =
+lmtp_generic_maps = btree:/etc/postfix/lmtp_generic_maps
+
+# Django : 2014-10-16 - Lookup-Tabelle zum Umschreibungen von Absender-eMail-
+#          -Adressen im SMTP-Envelop und/oder im Header der eMail.
+# default: sender_canonical_maps =
+sender_canonical_maps = btree:/etc/postfix/sender_canonical_maps
+
+#                       SRS - Sender Rewriting Scheme mit postsrsd
+#                       tcp:127.0.0.1:10001
+#          Definition welche Adressen umgeschrieben werden sollen
+# default: sender_canonical_classes = envelope_sender, header_sender
+sender_canonical_classes = envelope_sender
+
+# Django : 2014-10-16 - Lookup-Tabelle zum Umschreibungen von Empfänger-eMail-
+#          -Adressen im SMTP-Envelop und/oder im Header der eMail.
+# default: recipient_canonical_maps =
+recipient_canonical_maps = btree:/etc/postfix/recipient_canonical_maps
+
+#                       SRS - Sender Rewriting Scheme mit postsrsd
+#                       tcp:127.0.0.1:10002
+#          Definition welche Adressen umgeschrieben werden sollen
+# default: recipient_canonical_classes = envelope_recipient, header_recipient
+recipient_canonical_classes = envelope_recipient
+
+# Django : 2014-10-16 - Lookup-Tabelle zum Aktivieren von "Bounce-Nachrichten"
+#          an den Absender einer eMail über nicht existierende eMail-Adressen
+#          mit Angabe der neu zu nutzenden eMailadresse des Empfängers.
+# default: relocated_maps =
+relocated_maps = btree:/etc/postfix/relocated_maps
+
+# Django : 2015-10-15 - Ergebnisse der Adress-Verification cachen
+#          Kapitel 12.2.2 Dynamische Empfänger-Verifizierung
+#          Kapitel 9.5.5 envelope sender überprüfen
+# default: address_verify_map = btree:$data_directory/verify_cache
+
+################################################################################
+## SMTP RECIPIENT RESTRICTIONS
+#
+# Django : 2014-10-29 - Schutz unserer Empfänger mit Hilfe der Recipient
+#          Restrictions
+# default: smtpd_recipient_restrictions =
+#
+smtpd_recipient_restrictions =
+#          Postmaster, abuse und andere aufgaben- oder funktionsgebundene
+#          eMail-Adressen (Role-Accounts) whitelisten
+           check_recipient_access btree:/etc/postfix/access_recipient-rfc
+
+#          Black- und Whitelisting       (Kapitel 8.2.3 White- und Blacklisting)
+           check_client_access cidr:/etc/postfix/access_client
+           check_helo_access btree:/etc/postfix/access_helo
+           check_sender_access btree:/etc/postfix/access_sender
+           check_recipient_access btree:/etc/postfix/access_recipient
+
+#          Unsere eigenen Nutzer zulassen-/erlauben
+#                                (Kapitel 8.2.2 Relaying erlauben und verbieten)
+           permit_sasl_authenticated
+           permit_mynetworks
+
+#          RBL überprüfen               (Kapitel 10.11 Realtime Blackhole Lists)
+#           reject_rbl_client zen.spamhaus.org
+#           reject_rbl_client ix.dnsbl.manitu.net
+#           reject_rbl_client bl.spamcop.net
+#           reject_rhsbl_client multi.uribl.com
+
+#          Greylisting via postgrey checken via Unix-Socket
+#                                          (Kapitel 9.2.5 postgrey installieren)
+#          check_policy_service unix:postgrey/socket,
+
+#          Policyd-Weight check over TCP-Connection
+#                                      (Kapitel 9.3 policyd-weight installieren)
+#           check_client_access btree:/etc/postfix/policyd_weight_client_whitelist,
+#           check_policy_service inet:127.0.0.1:12525,
+
+#          Dynamische Prüfung auf existente Relay-Empfänger
+#                            (Kapitel 12.2.2 Dynamische Empfänger-Verifizierung)
+#           reject_unverified_recipient
+
+#          Backupserver (MX) erlauben
+#          permit_mx_backup
+
+#          alles andere an relaying verbieten
+#                                (Kapitel 8.2.2 Relaying erlauben und verbieten)
+#           reject_unauth_destination
+
+#          Quota-Status-Policy-Daemon am Dovecot-Backend-System
+#          Dovecotbuch (ISBN 978-3-95539-74-7) Seite 219 ff.
+#                          (Kapitel 11.11 "Der Quota-Policy-Server für Postfix")
+#           check_policy_service inet:10.0.0.77:10000
+
+#          Zu guter Letzt alles durchlassen, was bis jetzt noch nicht
+#          beanstandet wurde
+           permit
+
+################################################################################
+## SMTP RELAY RESTRICTIONS
+#
+# Django : 2014-10-27 - Definition, wer über unseren MX relayen darf oder nicht.
+#          http://www.postfix.org/postconf.5.html#smtpd_relay_restrictions
+# default: smtpd_relay_restrictions = permit_mynetworks,
+#          permit_sasl_authenticated, defer_unauth_destination
+#
+smtpd_relay_restrictions =
+#          Unsere eigenen Nutzer zulassen-/erlauben
+           permit_sasl_authenticated
+           permit_mynetworks
+
+#          Backupserver (MX) erlauben
+#           permit_mx_backup
+
+#          alles andere an relaying verbieten, d.h. mit einem finalen error 550 abweisen
+           reject_unauth_destination
+
+#########################################################
+## SSL stuff
+#
+
+# Django : 2015-02-23 - Remote Client nach einem Zertifikat fragen
+#          http://www.postfix.org/postconf.5.html#smtpd_tls_ask_ccert
+# default: smtpd_tls_ask_ccert = no
+## smtpd_tls_ask_ccert = yes
+
+# Tilo
+
+broken_sasl_auth_clients = yes
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_authenticated_header = yes
+smtpd_sasl_local_domain = $mydomain
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_tls_security_options = $smtpd_sasl_security_options
+
+smtpd_tls_auth_only = yes
+
+smtpd_tls_cert_file = /etc/pki/postfix/certs/mail.example.com.fullchain.pem
+smtpd_tls_key_file = /etc/pki/postfix/private/mail.example.com.private.key.pem
+smtpd_tls_CAfile =
+
+
+# Django : 2014-10-19 - SSL/TLS - Schutz durch verschlüsselte Verbindungen
+#          (Postfixbuch: Kapitel 20.2)
+#          Pfade für die Key- und Zertifikatsdateien für den SMTP-Client
+#          Konfigurationsbeispiel "b" bei dem das Serverzertifikat und die beiden
+#          Root-Zertifikate der CA in einer gemainsamen Dateien vorliegen.
+# default: smtpd_tls_key_file = $smtpd_tls_cert_file
+#          smtpd_tls_cert_file =
+#          smtpd_tls_CAfile =
+smtp_tls_key_file   = $smtpd_tls_key_file
+smtp_tls_cert_file  = $smtpd_tls_cert_file
+smtp_tls_CAfile     = $smtpd_tls_CAfile
+
+# Django : 2014-10-25 - Minimaler TLS Cipher Grad für die opportunistischen TLS-Verschlüsselung
+#          des Postfix SMTP-Daemon bei ankommenden Verbindungen
+#          http://www.postfix.org/postconf.5.html#smtpd_tls_ciphers
+# default: smtpd_tls_ciphers = export
+
+# Django : 2014-10-25 - Minimaler TLS Cipher Grad für die opportunistischen TLS-Verschlüsselung
+#          des Postfix SMTP-Client bei ausgehenden Verbindungen
+#          http://www.postfix.org/postconf.5.html#smtp_tls_ciphers
+# default: smtp_tls_ciphers = export
+
+# Django : 2014-10-25 - Liste der Chiffren oder Chiffre-Typen, die bei allen TLS
+#          Sicherheitsstufen des Postfix SMTP-Daemon ausgeschlossen werden sollen.
+#          http://www.postfix.org/postconf.5.html#smtpd_tls_exclude_ciphers
+# default: smtpd_tls_exclude_ciphers =
+smtpd_tls_exclude_ciphers =
+                            aNULL
+                            eNULL
+                            EXPORT
+                            DES
+                            3DES
+                            RC4
+                            MD5
+                            PSK
+                            aECDH
+                            EDH-DSS-DES-CBC3-SHA
+                            EDH-RSA-DES-CDC3-SHA
+                            KRB5-DE5
+                            CBC3-SHA
+
+# Django : 2014-10-25 - Liste der Chiffren oder Chiffre-Typen des Postfix SMTP-Client
+#          bei allen TLS Sicherheitsstufen ausgeschlossen werden sollen.
+#          http://www.postfix.org/postconf.5.html#smtp_tls_exclude_ciphers
+# default: smtp_tls_exclude_ciphers =
+smtp_tls_exclude_ciphers =
+                           aNULL
+                           eNULL
+                           EXPORT
+                           DES
+                           3DES
+                           RC4
+                           MD5
+                           PSK
+                           aECDH
+                           EDH-DSS-DES-CBC3-SHA
+                           EDH-RSA-DES-CDC3-SHA
+                           KRB5-DE5
+                           CBC3-SHA
+                           AES128-SHA
+                           DHE-RSA-AES128-SHA
+                           AES256-SHA
+                           DHE-RSA-AES256-SHA
+                           CAMELLIA128-SHA
+                           DHE-RSA-CAMELLIA128-SHA
+                           CAMELLIA256-SHA
+                           DHE-RSA-CAMELLIA256-SHA
+                           ECDHE-RSA-AES128-SHA
+                           ECDHE-RSA-AES256-SHA
+
+# Django : 2014-10-19 - Minimum TLS Cipher für die verpflichtende Verschlüsselung
+#          des Postfix SMTP-Daemon bei ankommenden Verbindungen
+#          http://www.postfix.org/postconf.5.html#smtpd_tls_mandatory_ciphers
+# default: smtpd_tls_mandatory_ciphers = medium
+smtpd_tls_mandatory_ciphers = high
+
+# Django : 2014-10-19 - Minimum TLS Cipher für die verpflichtende Verschlüsselung
+#          des Postfix SMTP-Clients bei ausgehenden Verbindungen
+#          http://www.postfix.org/postconf.5.html#smtp_tls_mandatory_ciphers
+# default: smtp_tls_mandatory_ciphers = medium
+smtp_tls_mandatory_ciphers = high
+
+# Django : 2014-10-19 - Ausschlussliste der verpflichtenden TLS Verschlüsselung
+#          des postfix SMTP-Daemons.
+#          http://www.postfix.org/postconf.5.html#smtpd_tls_mandatory_exclude_ciphers
+# default: smtpd_tls_mandatory_exclude_ciphers =
+smtpd_tls_mandatory_exclude_ciphers =
+                                      aNULL
+                                      eNULL
+                                      EXPORT
+                                      DES
+                                      RC4
+                                      MD5
+                                      PSK
+                                      aECDH
+                                      EDH-DSS-DES-CBC3-SHA
+                                      EDH-RSA-DES-CDC3-SHA
+                                      KRB5-DE5
+                                      CBC3-SHA
+
+# Django : 2014-10-19 - Ausschlussliste der verpflichtenden TLS Verschlüsselung
+#          des postfix SMTP-Clients.
+#          http://www.postfix.org/postconf.5.html#smtp_tls_mandatory_exclude_ciphers
+# default: smtp_tls_mandatory_exclude_ciphers =
+smtp_tls_mandatory_exclude_ciphers =
+                                     aNULL
+                                     eNULL
+                                     EXPORT
+                                     DES
+                                     RC4
+                                     MD5
+                                     PSK
+                                     aECDH
+                                     EDH-DSS-DES-CBC3-SHA
+                                     EDH-RSA-DES-CDC3-SHA
+                                     KRB5-DE5
+                                     CBC3-SHA
+                                     AES128-SHA
+                                     DHE-RSA-AES128-SHA
+                                     AES256-SHA
+                                     DHE-RSA-AES256-SHA
+                                     CAMELLIA128-SHA
+                                     DHE-RSA-CAMELLIA128-SHA
+                                     CAMELLIA256-SHA
+                                     DHE-RSA-CAMELLIA256-SHA
+                                     ECDHE-RSA-AES128-SHA
+                                     ECDHE-RSA-AES256-SHA
+
+# Django : 2014-10-19 - Positiv-/Negativliste aller TLS-Protokolle, die der
+#          Postfix SMTP-Server bei der opportunischtischen Verschlüsselung
+#          berücksichtigen soll.
+#          http://www.postfix.org/postconf.5.html#smtpd_tls_protocols
+# default: smtpd_tls_protocols =
+smtpd_tls_protocols =
+                      !SSLv2
+                      !SSLv3
+
+# Django : 2014-10-19 - Positiv-/Negativliste aller TLS-Protokolle, die der
+#          Postfix SMTP-/LMTP-Client bei der opportunischtischen Verschlüsselung
+#          berücksichtigen soll.
+#          http://www.postfix.org/postconf.5.html#smtp_tls_protocols
+# default: smtp_tls_protocols = !SSLv2
+#          lmtp_tls_protocols = !SSLv2
+smtp_tls_protocols =
+                     !SSLv2
+                     !SSLv3
+lmtp_tls_protocols = $smtp_tls_protocols
+
+# Django : 2014-10-19 - Positiv-/Negativliste aller TLS-Protokolle, die der
+#          Postfix SMTP-Server bei der verpflichtenden Verschlüsselung
+#          berücksichtigen soll.
+#          http://www.postfix.org/postconf.5.html#smtpd_tls_mandatory_protocols
+# default: smtpd_tls_mandatory_protocols = !SSLv2
+smtpd_tls_mandatory_protocols =
+                                !SSLv2
+                                !SSLv3
+
+# Django : 2014-10-19 - Positiv-/Negativliste aller TLS-Protokolle, die der
+#          Postfix SMTP-/LMTP-Client bei der verpflichtenden Verschlüsselung
+#          berücksichtigen soll.
+#          http://www.postfix.org/postconf.5.html#smtp_tls_mandatory_protocols
+# default: smtp_tls_mandatory_protocols = !SSLv2
+smtp_tls_mandatory_protocols =
+                               !SSLv2
+                               !SSLv3
+lmtp_tls_mandatory_protocols = $smtp_tls_mandatory_protocols
+
+# Django : 2014-10-19 - Opportunistische TLS-Verschlüsselung für den
+#          SMTP-Daemon für den ankommenden Verkehr aktiviert; d.h. STARTTLS
+#          wird dem Remote-SMTP-Client angeboten aber nicht zwingend
+#          vorgeschrieben.
+#          http://www.postfix.org/postconf.5.html#smtpd_tls_security_level
+#
+#          Folgende Verschlüsselungsvarianten sind einstellbar:
+#          none:    TLS wird nicht genutzt; d.h. die Übertragung werden nicht ver-
+#                   schlüsselt!
+#
+#          may :    Opportunistische TLS Verschlüsselung: Einliefernden SMTP-Clients
+#                   wird STARTTLS angeboten, aber nicht zwingend vorgeschrieben. Der
+#                   Client bestimmt dann ob verschlüsselt gesprochen werden soll,
+#                   oder nicht.
+#
+#          encrypt: Vorgeschriebene TLS Verschlüsselung: Einliefernden SMTP-Clients
+#                   wird STARTTLS angeboten und zwingend vorgeschrieben! Diese
+#                   Einstellung ist aber gemäß RFC 2487 nur für dedizierte Mailserver
+#                   zu wählen. Öffentlich erreichbare Mailserver müssen neben einer
+#                   TLS-geschützen Übertragung auch PLAIN-TEXT Übertragungen zulassen!
+# default: smtpd_tls_security_level =
+smtpd_tls_security_level = may
+
+# Django : 2014-10-19 - Opportunistische TLS-Verschlüsselung für den
+#          SMTP-Daemon für den ankommenden Verkehr aktiviert; d.h. STARTTLS
+#          wird dem Remote-SMTP-Client angeboten aber nicht zwingend
+#          vorgeschrieben.
+#          http://www.postfix.org/postconf.5.html#smtpd_tls_security_level
+#
+#          Folgende Verschlüsselungsvarianten sind einstellbar:
+#          none:    TLS wird nicht genutzt; d.h. die Übertragung werden nicht ver-
+#                   schlüsselt!
+#
+#          may :    Opportunistische TLS Verschlüsselung: Einliefernden SMTP-Clients
+#                   wird STARTTLS angeboten, aber nicht zwingend vorgeschrieben. Der
+#                   Client bestimmt dann ob verschlüsselt gesprochen werden soll,
+#                   oder nicht.
+#
+#          encrypt: Vorgeschriebene TLS Verschlüsselung: Einliefernden SMTP-Clients
+#                   wird STARTTLS angeboten und zwingend vorgeschrieben! Diese
+#                   Einstellung ist aber gemäß RFC 2487 nur für dedizierte Mailserver
+#                   zu wählen. Öffentlich erreichbare Mailserver müssen neben einer
+#                   TLS-geschützen Übertragung auch PLAIN-TEXT Übertragungen zulassen!
+# default: smtpd_tls_security_level =
+smtpd_tls_security_level = may
+
+#########################################################################################
+## fingerprints SHA-1 für Zertifikate
+#
+# via file:
+#           /etc/postfix/smtp_tls_policy_maps
+#
+# Django : 2015-10-07 - Hashfunktion für den Fingerprint der Zertifikate
+#          Empfängt der SMTP-Client ein Serverzertifikat, kann er zur
+#          Prüfung, ob er mit dem richtigen Zielserver verbunden ist,
+#          den Zertifikatsfingerprint ermitteln.
+# default: smtp_tls_fingerprint_digest = md5
+#smtp_tls_fingerprint_digest = sha1
+
+# Django : 2015-10-07 - Zielorientierte SMTP TLS Policies
+#          Nutzung einer Tabelle für die zielwegorientierte individuelle
+#          Vorgabe einer verpflichtenden TLS-Transportverschlüsselung
+#          einzelner Zieldomains.
+#          smtp_tls_security_level eine individuelle Tabelle für die
+#          http://www.postfix.org/postconf.5.html#smtp_tls_policy_maps
+# default: smtp_tls_policy_maps =
+#smtp_tls_policy_maps = btree:/etc/postfix/smtp_tls_policy_maps
+
+#########################################################################################
+## TLS logging
+#
+# Django : 2014-10-19 - Headerzeile in der eMail einfügen mit Informationen
+#          zur verwendeten Verschlüsselung
+#          http://www.postfix.org/postconf.5.html#smtpd_tls_received_header
+# default: smtpd_tls_received_header = no
+smtpd_tls_received_header = yes
+
+# Django : 2014-10-19 - Logging der TLS-Infomationen zu den Verbindungen im
+#          Maillog des SMTP-Daemons für den ankommenden SMTP-Verkehr.
+#          http://www.postfix.org/postconf.5.html#smtpd_tls_loglevel
+# default: smtpd_tls_loglevel = 0
+smtpd_tls_loglevel = 1
+
+# Django : 2014-10-19 - Logging der TLS-Infomationen zu den Verbindungen im
+#          Maillog des SMTP-Clients für den ausgehenden SMTP-Verkehr.
+#          http://www.postfix.org/postconf.5.html#smtp_tls_loglevel
+# default: smtp_tls_loglevel = 0
+smtp_tls_loglevel = 2
+
+smtpd_upstream_proxy_protocol = haproxy
+
+## SPF/DKIM/DMARC setup
+#smtpd_milters = inet:127.0.0.1:9981, inet:127.0.0.1:9982, inet:127.0.0.1:9983
+#non_smtpd_milters = inet:127.0.0.1:9981, inet:127.0.0.1:9982, inet:127.0.0.1:9983
+
+# SPF (spf-milter)
+spf_milter = inet:127.0.0.1:9982
+
+# DKIM milter
+dkim_milter = inet:127.0.0.1:9981
+
+# DMARC milter
+dmarc_milter = inet:127.0.0.1:9983
+
+################################################################################
+## POSTSCREEN - ERSTE STUFE DER SPAM/UCE/VIREN-ABWEHRMECHANISMEN
+#
+# Django : 2014-10-29 - PERMANENT WHITE/BLACKLIST TEST
+# default: postscreen_access_list = permit_mynetworks
+postscreen_access_list = permit_mynetworks
+                         cidr:/etc/postfix/postscreen_white-blacklist
+#
+# default: postscreen_blacklist_action = ignore
+postscreen_blacklist_action = drop
+
+
+# Django : 2014-10-29 - MAIL EXCHANGER POLICY TESTS
+# default: postscreen_whitelist_interfaces = static:all
+#postscreen_whitelist_interfaces = !88.217.171.167
+#                                  static:all
+
+
+# Django : 2014-10-29 - PRE 220 GREETING TESTS
+#
+# default: postscreen_greet_banner = $smtpd_banner
+#
+# default: postscreen_greet_action = ignore
+postscreen_greet_action = enforce
+
+# default: postscreen_dnsbl_threshold = 1
+postscreen_dnsbl_threshold = 2
+#
+# default: postscreen_dnsbl_sites =
+postscreen_dnsbl_sites = zen.spamhaus.org*2
+                         bl.spamcop.net*1
+                         b.barracudacentral.org*1
+#
+# default: postscreen_dnsbl_action = ignore
+postscreen_dnsbl_action = enforce
+
+
+# Django : 2014-10-29 - POST 220 GREETING TESTS
+#
+# default: postscreen_dnsbl_whitelist_threshold = 0
+postscreen_dnsbl_whitelist_threshold = -1
+#
+# default: postscreen_pipelining_enable = no
+#postscreen_pipelining_enable = yes
+#
+# default: postscreen_pipelining_action = enforce
+#
+# default: postscreen_non_smtp_command_enable = no
+#postscreen_non_smtp_command_enable = yes
+#
+# default: postscreen_non_smtp_command_action = drop
+#
+# default: postscreen_bare_newline_enable = no
+#postscreen_bare_newline_enable = yes
+#
+# default: postscreen_bare_newline_action = ignore
+#postscreen_bare_newline_action = drop
+#
+
+# enable HAProxy support
+postscreen_upstream_proxy_protocol = haproxy

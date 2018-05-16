@@ -1,0 +1,5 @@
+driver = pgsql
+connect = host=<%= @host %> dbname=<%= @database %> user=<%= @username %> password=<%= @password %>
+default_pass_scheme = MD5-CRYPT
+user_query = SELECT '/var/srv/mail/vmail/%d/%u' as home, 'maildir:/var/srv/mail/vmail/%d/%u' as mail, 22222 AS uid, 22222 AS gid, concat('dirsize:storage=',  quota) AS quota FROM mailbox WHERE username = '%u' AND active = '1'
+password_query = SELECT username as user, password, '/var/srv/mail/vmail/%d/%u' as userdb_home, 'maildir:/var/srv/mail/vmail/%d/%u' as userdb_mail, 22222 as  userdb_uid, 22222 as userdb_gid FROM mailbox WHERE username = '%u' AND active = '1'

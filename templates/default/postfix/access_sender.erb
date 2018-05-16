@@ -1,0 +1,10 @@
+# Django : 2012-02-06
+# Kapitel 5.2.7 access-Tabelle: Wer darf, wer darf nicht?
+# Tabelle zum black- und whitelisten einzelner Absender auf Basis ihrer
+# eMail-Adresse. Nach dem Ändern und/oder Erweitern der Tabelle, muß noch
+# mittels:
+#                  $ postmap /etc/postfix/access_sender
+#
+# die zugehörige Datenbank erzeugt werden.
+#
+#tachtler.net          reject_plaintext_session

@@ -1,0 +1,13 @@
+# Kapitel 5.2.4 generic-Tabelle: Umschreiben bei ausgehenden eMails
+# Lookup-Tabelle zum Umschreibungen von Empfänger eMail-Adressen im
+# SMTP-Envelop und im Header der eMail.
+#
+# Nach dem Ändern und/oder Erweitern der Tabelle, muß noch mittels
+# $ postmap /etc/postfix/lmtp_generic_maps die zugehörige Datenbank
+# erzeugt werden.
+#
+# catch all
+#@omni128.de             @nausch.org
+#
+# genau eine Adresse umschreiben
+#swat@nausch.org        abuse@nausch.org

@@ -1,0 +1,160 @@
+<?php
+$CONF['configured'] = true;
+$CONF['setup_password'] = 'changeme';
+
+$CONF['database_type'] = 'pgsql';
+$CONF['database_host'] = '<%= @host %>';
+$CONF['database_user'] = '<%= @user %>';
+$CONF['database_password'] = '<%= @password %>';
+$CONF['database_name'] = '<%= @dbname %>';
+
+// Here, if you need, you can customize table names.
+$CONF['database_prefix'] = '';
+$CONF['database_tables'] = array (
+  'admin' => 'admin',
+  'alias' => 'alias',
+  'alias_domain' => 'alias_domain',
+  'config' => 'config',
+  'domain' => 'domain',
+  'domain_admins' => 'domain_admins',
+  'fetchmail' => 'fetchmail',
+  'log' => 'log',
+  'mailbox' => 'mailbox',
+  'vacation' => 'vacation',
+  'vacation_notification' => 'vacation_notification',
+  'quota' => 'quota',
+  'quota2' => 'quota2',
+);
+
+$CONF['setup_password'] = '8885c013dc30ec0f0439021eab218aa9:4c69972b48868af9636a1d73e94fecb2210bcab8';
+
+// Site Admin
+// Define the Site Admin's email address below.
+// This will be used to send emails from to create mailboxes and
+// from Send Email / Broadcast message pages.
+// Leave blank to send email from the logged-in Admin's Email address.
+$CONF['admin_email'] = 'root@example.com';
+
+// Mail Server
+// Hostname (FQDN) of your mail server.
+// This is used to send email to Postfix in order to create mailboxes.
+$CONF['smtp_server'] = 'localhost';
+$CONF['smtp_port'] = '25';
+
+// SMTP Client
+// Hostname (FQDN) of the server hosting Postfix Admin
+// Used in the HELO when sending emails from Postfix Admin
+$CONF['smtp_client'] = 'mail.example.com';
+
+// Encrypt
+// In what way do you want the passwords to be crypted?
+// md5crypt = internal postfix admin md5
+// md5 = md5 sum of the password
+// system = whatever you have set as your PHP system default
+// cleartext = clear text passwords (ouch!)
+// mysql_encrypt = useful for PAM integration
+// authlib = support for courier-authlib style passwords - also set $CONF['authlib_default_flavor']
+// dovecot:CRYPT-METHOD = use dovecotpw -s 'CRYPT-METHOD'. Example: dovecot:CRAM-MD5
+//     IMPORTANT:
+//     - don't use dovecot:* methods that include the username in the hash - you won't be able to login to PostfixAdmin in this case
+//     - you'll need at least dovecot 2.1 for salted passwords ('doveadm pw' 2.0.x doesn't support the '-t' option)
+//     - dovecot 2.0.0 - 2.0.7 is not supported
+$CONF['encrypt'] = 'md5crypt';
+
+// In what flavor should courier-authlib style passwords be encrypted?
+// (only used if $CONF['encrypt'] == 'authlib')
+// md5 = {md5} + base64 encoded md5 hash
+// md5raw = {md5raw} + plain encoded md5 hash
+// SHA = {SHA} + base64-encoded sha1 hash
+// crypt = {crypt} + Standard UNIX DES-encrypted with 2-character salt
+$CONF['authlib_default_flavor'] = 'md5raw';
+
+// If you use the dovecot encryption method: where is the dovecotpw binary located?
+// for dovecot 1.x
+// $CONF['dovecotpw'] = "/usr/sbin/dovecotpw";
+// for dovecot 2.x (dovecot 2.0.0 - 2.0.7 is not supported!)
+$CONF['dovecotpw'] = "/usr/sbin/doveadm pw";
+if(file_exists('/usr/bin/doveadm')) {
+$CONF['dovecotpw'] = "/usr/bin/doveadm pw"; # debian
+}
+
+// Default Aliases
+// The default aliases that need to be created for all domains.
+// You can specify the target address in two ways:
+// a) a full mail address
+// b) only a localpart ('postmaster' => 'admin') - the alias target will point to the same domain
+$CONF['default_aliases'] = array (
+'abuse' => 'abuse@example.com',
+'hostmaster' => 'hostmaster@example.com',
+'postmaster' => 'postmaster@example.com',
+'webmaster' => 'webmaster@example.com'
+);
+
+// Mailboxes
+// If you want to store the mailboxes per domain set this to 'YES'.
+// Examples:
+//   YES: /usr/local/virtual/domain.tld/username@domain.tld
+//   NO:  /usr/local/virtual/username@domain.tld
+$CONF['domain_path'] = 'YES';
+
+// If you don't want to have the domain in your mailbox set this to 'NO'.
+// Examples:
+//   YES: /usr/local/virtual/domain.tld/username@domain.tld
+//   NO:  /usr/local/virtual/domain.tld/username
+// Note: If $CONF['domain_path'] is set to NO, this setting will be forced to YES.
+$CONF['domain_in_mailbox'] = 'NO';
+
+// If you want to define your own function to generate a maildir path set this to the name of the function.
+// Notes:
+//   - this configuration directive will override both domain_path and domain_in_mailbox
+//   - the maildir_name_hook() function example is present below, commented out
+//   - if the function does not exist the program will default to the above domain_path and domain_in_mailbox settings
+$CONF['maildir_name_hook'] = 'NO';
+
+
+// Transport
+// If you want to define additional transport options for a domain set this to 'YES'.
+// Read the transport file of the Postfix documentation.
+$CONF['transport'] = 'NO';
+
+// Transport options
+// If you want to define additional transport options put them in array below.
+$CONF['transport_options'] = array (
+  'virtual',  // for virtual accounts
+  'local',    // for system accounts
+  'relay'     // for backup mx
+);
+
+// Transport default
+// You should define default transport. It must be in array above.
+$CONF['transport_default'] = 'virtual';
+
+// Alias Control
+// Postfix Admin inserts an alias in the alias table for every mailbox it creates.
+// The reason for this is that when you want catch-all and normal mailboxes
+// to work you need to have the mailbox replicated in the alias table.
+// If you want to take control of these aliases as well set this to 'YES'.
+
+
+// Header
+$CONF['show_header_text'] = 'YES';
+$CONF['header_text'] = ':: Postfix Admin for example.com ::';
+
+// Footer
+// Below information will be on all pages.
+// If you don't want the footer information to appear set this to 'NO'.
+$CONF['show_footer_text'] = 'YES';
+$CONF['footer_text'] = 'Return to postfixadmin.example.com';
+$CONF['footer_link'] = 'http://postfixadmin.example.com';
+
+// Welcome Message
+// This message is send to every newly created mailbox.
+// Change the text between EOM.
+$CONF['welcome_text'] = <<<EOM
+Hi,
+
+Welcome to your new account.
+EOM;
+
+//
+// END OF CONFIG FILE

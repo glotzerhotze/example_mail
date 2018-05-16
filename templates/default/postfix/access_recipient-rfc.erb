@@ -1,0 +1,9 @@
+# Django : 2012-02-06
+# Postmaster, abuse und andere aufgaben- oder funktionsgebundene eMail-Adressen
+# (Role-Accounts) whitelisten. Nach dem Ändern und/oder Erweiterrn der Tabelle,
+# muß noch mittels:
+#             $ postmap /etc/postfix/access_recipient-rfc
+#
+# die zugehörige Datenbank erzeugt werden.
+abuse@          OK
+postmaster@     OK

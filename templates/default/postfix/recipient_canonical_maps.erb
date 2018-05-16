@@ -1,0 +1,29 @@
+# Django : 2012-02-06
+# Kapitel 5.2.3 canonical-Tabelle: Ich versteck' mich
+# Lookup-Tabelle zum Umschreibungen von Empfänger eMail-Adressen
+# im SMTP-Envelop und im Header der eMail.
+# Nach dem Ändern und/oder Erweitern der Tabelle, muß noch mittels
+# $ postmap /etc/postfix/recipient_canonical_maps
+# die zugehörige Datenbank erzeugt werden.
+#
+# catch all
+#@omni128.de             @nausch.org
+#
+# genau eine Adresse umschreiben
+#swat@nausch.org        abuse@nausch.org
+#
+# Django : 2012-12-29
+# FaxMaster für hylafax definiert
+#FaxMaster@nausch.org            django@nausch.org
+#root@vml000020.dmz.nausch.org   django@nausch.org
+
+#sks@keyserver.nausch.org        sks@vml000030.dmz.nausch.org
+
+# Django : 2014-05-09
+# test für dmarc.nausch.org
+#huhu@dmarc.nausch.org          dmarc-reports@vml000030.dmz.nausch.org
+#huhu@dmarc.nausch.org           huhu@dmarc.nausch.org
+
+# Django : 2014-06-07
+# rewrite
+#root@vml000080.dmz.nausch.org   django@nausch.org

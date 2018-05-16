@@ -1,0 +1,6 @@
+# virtual_alias_maps.cf
+user            = <%= @username %>
+password        = <%= @password %>
+dbname          = <%= @database %>
+hosts           = <%= @host %>
+query           = SELECT goto FROM alias WHERE address='%s' AND active='1';

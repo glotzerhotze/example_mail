@@ -1,0 +1,23 @@
+#Socket local:/var/spool/postfix/private/opendkim
+Socket inet:9981@127.0.0.1
+
+Syslog yes
+UMask 002
+UserID opendkim
+
+Selector mail
+Mode sv
+SubDomains yes
+AutoRestart yes
+Background yes
+Canonicalization relaxed/simple
+DNSTimeout 5
+SignatureAlgorithm rsa-sha256
+SoftwareHeader yes
+Logwhy yes
+
+InternalHosts refile:/etc/internalhosts
+KeyTable refile:/etc/opendkim/keytable
+SigningTable refile:/etc/opendkim/signtable
+
+OversignHeaders From

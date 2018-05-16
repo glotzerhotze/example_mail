@@ -1,0 +1,12 @@
+#!/bin/bash
+# Script zum Erstellen der Diffie Hellman Schlüssel
+# Django <django@mailserver.guru> (c) 2015
+cd /etc/pki/tls/tmp
+umask 022
+openssl dhparam -out dh_512.pem 512
+openssl dhparam -out dh_1024.pem 1024
+openssl dhparam -out dh_2048.pem 2048
+openssl dhparam -out dh_4096.pem 4096
+chmod 640 dh_512.pem dh_1024.pem dh_2048.pem dh_4096.pem
+/usr/bin/rsync /etc/pki/tls/tmp/*.pem /etc/pki/tls/private/
+rm *.pem -f
